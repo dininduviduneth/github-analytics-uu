@@ -1,9 +1,10 @@
 import json 
 import requests
 from pprint import pprint
-#access token from my github account 
-token="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" 
-token = {'Authorization': 'token ' + token}
+#list of our personanl tokens
+tokens=["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"]
+#access token personal github account 
+token = {'Authorization': 'token ' + tokens.pop()}
 #api call to get the json which just returns the list of repositories 
 url=f"https://api.github.com/search/repositories?q=created:>2022-05-01+archived:false&per_page=100"
 repositories = requests.get(url,headers=token).json()
