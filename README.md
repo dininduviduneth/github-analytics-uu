@@ -1,7 +1,9 @@
 # Github-analytic-system-using-pulsar
 
 For the consumer and producer we need to create a shared network using the command:
+
     docker network create pulsar_network
+    
 first we start the pulsar container:
 
     docker run -d -it -p 6650:6650 -p 8080:8080 \
