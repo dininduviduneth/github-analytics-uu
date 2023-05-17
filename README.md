@@ -16,3 +16,10 @@ and run the consumer producer with :
 
     docker run --network pulsar_network  {name}:{tag}
 
+Note that for the consumer/producer to connect to the pulsar client we need to give the name we have specified when we initialized the container
+the client should look something like this :
+
+    client = pulsar.Client('pulsar://pulsar_container:6650')
+
+
+
