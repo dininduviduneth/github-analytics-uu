@@ -2,7 +2,7 @@ import pulsar
 import json
 from pprint import pprint
 # Create a pulsar client by supplying ip address and port
-client = pulsar.Client('pulsar://localhost:6650')
+client = pulsar.Client('pulsar://pulsar_container:6650')
 data={}
 # Subscribe to a topic and subscription
 consumer1 = client.subscribe('Repos2', subscription_name='DE-sub')

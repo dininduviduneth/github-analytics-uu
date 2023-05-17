@@ -4,7 +4,7 @@ import json
 from pprint import pprint
 from requests.structures import CaseInsensitiveDict
 # Create a pulsar client by supplying ip address and port
-client = pulsar.Client('pulsar://localhost:6650')
+client = pulsar.Client('pulsar://pulsar_container:6650')
 # Create a producer on the topic that consumer can subscribe to
 producer_1 = client.create_producer('Repos2')
 producer_2 = client.create_producer('Commits2')
