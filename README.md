@@ -13,5 +13,6 @@ Then we build the images of the consumer producer with :
     docker build --tag {name}:{tag} producer/
 
 and run the consumer producer with :
+
     docker run --network pulsar_network  {name}:{tag}
 
