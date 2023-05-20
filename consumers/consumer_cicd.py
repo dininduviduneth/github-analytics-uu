@@ -10,10 +10,10 @@ data={}
 consumer1 = client.subscribe('repositories_test1', subscription_name='question4')
 while True:
     msg1= consumer1.receive()
-    repo_name=json.loads(msg1.data().decode('utf-8'))
+    repo_name=msg1.data().decode('utf-8')
     #check if there exists runs if it return an empy json it means we dont have a github workflow which means no CICD
-    spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs",headers=token).json()
-    print(f"The repository {repo_name}")
+    spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs").json() #without token 
+    # spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs",headers=token).json()
     if spec_repo['total_count'] > 0:
         print(f"uses continuous integration.")
         ci_cd= True
@@ -28,5 +28,5 @@ while True:
 
     ###this is for checking that the connect
     data[f"{repo_name}"]=ci_cd
-    print(data)
+    print(f"{repo_name} {data[f'{repo_name}']} ")
 client.close()
