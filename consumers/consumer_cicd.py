@@ -7,7 +7,7 @@ token="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"
 client = pulsar.Client('pulsar://pulsar_container:6650')
 data={}
 # Subscribe to a topic and subscription
-consumer1 = client.subscribe('repositories_test1', subscription_name='question3')
+consumer1 = client.subscribe('repositories_test1', subscription_name='question4')
 while True:
     msg1= consumer1.receive()
     repo_name=json.loads(msg1.data().decode('utf-8'))
