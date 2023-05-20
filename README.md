@@ -25,3 +25,7 @@ the client should look something like this :
 
 
 
+the consumers and producers need to be changed to right adress of the pulsar before they can run 
+
+
+
