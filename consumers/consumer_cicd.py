@@ -2,7 +2,11 @@ import pulsar
 import json
 import requests
 from pprint import pprint
+import pymongo
 token="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"
+myclient = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
+mydb = myclient["mydatabase_test"]
+mycol = mydb["repositories_test"]
 # Create a pulsar client by supplying ip address and port
 client = pulsar.Client('pulsar://pulsar_container:6650')
 data={}
@@ -20,11 +24,22 @@ while True:
     else:
         ci_cd= False
             
+    if ci_cd:
+        filter = {
+            "full_name": repo_name
+        }
 
-    ###############
-    ##mongo code###
-    ###############
+        update = {
+            "$set": {
+                "has_cicd": True
+            }
+        }
 
+        result = mycol.update_one(filter, update)
+
+        print("Matched:", result.matched_count)
+        print("Modified:", result.modified_count)
+    
 
     ###this is for checking that the connect
     data[f"{repo_name}"]=ci_cd
