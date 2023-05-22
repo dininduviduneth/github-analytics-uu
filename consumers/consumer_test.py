@@ -29,5 +29,5 @@ while True:
 
     ###this is for checking that the connect
     data[f"{repo_name}"]=test_driven_development
-    print(data)
+    print(f"{repo_name} {data[f'{repo_name}']} ")
 client.close()
