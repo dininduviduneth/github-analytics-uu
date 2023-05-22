@@ -14,7 +14,7 @@ data={}
 consumer1 = client.subscribe('repositories_test1', subscription_name='question3')
 while True:
     msg1= consumer1.receive()
-    repo_name=json.loads(msg1.data().decode('utf-8'))
+    repo_name=msg1.data().decode('utf-8')
     spec_repo_contents=requests.get(f"https://api.github.com/repos/{repo_name}/contents").json()# without token
     # spec_repo_contents=requests.get(f"https://api.github.com/repos/{repo_name}/contents",headers=token).json()
     test_driven_development= False
