@@ -19,8 +19,11 @@ for i in range(1,10):
     url=f"https://api.github.com/search/repositories?q=created:>2022-05-01+created:<2022-05-10+archived:false&per_page=100&page={i}"
     repositories=requests.get(url,headers=headers).json()
     for i in range(100):
-        repo_name=repositories['items'][i]['full_name']
-        language=repositories['items'][i]['language']
+        try:
+            repo_name=repositories['items'][i]['full_name']
+            language=repositories['items'][i]['language']
+        except:
+            continue
         mydict = {
         "full_name": repo_name,
         "language": language,
