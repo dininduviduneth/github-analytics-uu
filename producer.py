@@ -13,7 +13,7 @@ mycol = mydb["repositories_test"]
 # Create a pulsar client by supplying ip address and port
 client = pulsar.Client('pulsar://localhost:6650')
 # Create a producer on the topic that consumer can subscribe to
-producer_1 = client.create_producer('repositories_testtest1')
+producer_1 = client.create_producer('repositories_testtest2')
 data={}
 for i in range(1,10):
     url=f"https://api.github.com/search/repositories?q=created:>2022-05-01+created:<2022-05-10+archived:false&per_page=100&page={i}"
