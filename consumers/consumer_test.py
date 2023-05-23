@@ -12,7 +12,7 @@ mycol = mydb["repositories_test"]
 client = pulsar.Client('pulsar://192.168.2.51:6650')
 data={}
 # Subscribe to a topic and subscription
-consumer1 = client.subscribe('repositories_testtest2', subscription_name='question3')
+consumer1 = client.subscribe('repositories_testtest3', subscription_name='question3')
 while True:
     msg1= consumer1.receive()
     repo_name=msg1.data().decode('utf-8')
