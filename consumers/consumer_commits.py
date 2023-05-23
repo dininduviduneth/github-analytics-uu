@@ -5,7 +5,7 @@ from pprint import pprint
 import pymongo
 token="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" 
 headers = {'Authorization': 'token ' + token}
-myclient = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
+myclient = pymongo.MongoClient("mongodb://root:example@192.168.2.51:27017/")
 mydb = myclient["mydatabase_test"]
 mycol = mydb["repositories_test"]
 # Create a pulsar client by supplying ip address and port
