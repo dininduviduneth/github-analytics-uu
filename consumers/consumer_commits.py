@@ -3,7 +3,7 @@ import json
 import requests
 from pprint import pprint
 import pymongo
-token="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" 
+token="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" 
 myclient = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
 mydb = myclient["mydatabase_test"]
 mycol = mydb["repositories_test"]
@@ -15,8 +15,8 @@ consumer1 = client.subscribe('repositories_test1', subscription_name='question2'
 while True:
     msg1= consumer1.receive()
     repo_name=msg1.data().decode('utf-8')
-    commits=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1") # without token 
-    # commits=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=token)
+    # commits=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1") # without token 
+    commits=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=token)
     commits = commits.headers
     num_commits=int(commits['Link'].split('&page=')[-1].split(';')[0].split('>')[0])
     filter = {

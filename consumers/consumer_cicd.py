@@ -16,8 +16,8 @@ while True:
     msg1= consumer1.receive()
     repo_name=msg1.data().decode('utf-8')
     #check if there exists runs if it return an empy json it means we dont have a github workflow which means no CICD
-    spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs").json() #without token 
-    # spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs",headers=token).json()
+    #spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs").json() #without token 
+    spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs",headers=token).json()
     if spec_repo['total_count'] > 0:
         print(f"uses continuous integration.")
         ci_cd= True

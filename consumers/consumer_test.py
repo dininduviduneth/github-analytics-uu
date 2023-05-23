@@ -3,7 +3,7 @@ import json
 import requests
 from pprint import pprint
 import pymongo
-token="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"
+token="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"
 myclient = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
 mydb = myclient["mydatabase_test"]
 mycol = mydb["repositories_test"]
@@ -15,8 +15,8 @@ consumer1 = client.subscribe('repositories_test1', subscription_name='question3'
 while True:
     msg1= consumer1.receive()
     repo_name=msg1.data().decode('utf-8')
-    spec_repo_contents=requests.get(f"https://api.github.com/repos/{repo_name}/contents").json()# without token
-    # spec_repo_contents=requests.get(f"https://api.github.com/repos/{repo_name}/contents",headers=token).json()
+    #spec_repo_contents=requests.get(f"https://api.github.com/repos/{repo_name}/contents").json()# without token
+    spec_repo_contents=requests.get(f"https://api.github.com/repos/{repo_name}/contents",headers=token).json()
     test_driven_development= False
     for i in spec_repo_contents:
         if "test" in i['name'].lower():
