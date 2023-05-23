@@ -1,3 +1,3 @@
-192.168.2.165
-192.168.2.29
-192.168.2.238
+192.168.2.165 consumer_file=consumer_commits.py
+192.168.2.29  consumer_file=consumer_cicd.py
+192.168.2.238 consumer_file=consumer_test.py
