@@ -8,7 +8,7 @@ myclient = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
 mydb = myclient["mydatabase_test"]
 mycol = mydb["repositories_test"]
 # Create a pulsar client by supplying ip address and port
-client = pulsar.Client('pulsar://pulsar_container:6650')
+client = pulsar.Client('pulsar://192.168.2.51:6650')
 data={}
 # Subscribe to a topic and subscription
 consumer1 = client.subscribe('repositories_testtest', subscription_name='question2')

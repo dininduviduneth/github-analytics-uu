@@ -11,7 +11,7 @@ myclient = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
 mydb = myclient["mydatabase_test"]
 mycol = mydb["repositories_test"]
 # Create a pulsar client by supplying ip address and port
-client = pulsar.Client('pulsar://pulsar_container:6650')
+client = pulsar.Client('pulsar://localhost:6650')
 # Create a producer on the topic that consumer can subscribe to
 producer_1 = client.create_producer('repositories_testtest')
 data={}
