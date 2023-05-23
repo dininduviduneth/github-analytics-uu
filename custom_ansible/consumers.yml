@@ -17,3 +17,8 @@
           - pulsar-client
           - pymongo
 
+  tasks:
+    - name: Copy Python script
+      copy:
+        src: /home/ubuntu/Github-analytic-system-using-pulsar/consumers/{{consumer_file}}
+        dest: /home/ubuntu/
