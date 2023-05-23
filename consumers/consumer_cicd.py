@@ -3,7 +3,7 @@ import json
 import requests
 from pprint import pprint
 import pymongo
-token="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"
+token="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"
 headers = {'Authorization': 'token ' + token}
 myclient = pymongo.MongoClient("mongodb://root:example@192.168.2.51:27017/")
 mydb = myclient["mydatabase_test"]
