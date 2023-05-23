@@ -5,7 +5,7 @@ from pprint import pprint
 from requests.structures import CaseInsensitiveDict
 import pymongo
 token="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" 
-
+headers = {'Authorization': 'token ' + token}
 #Creating the database
 myclient = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
 mydb = myclient["mydatabase_test"]
@@ -17,7 +17,7 @@ producer_1 = client.create_producer('repositories_testtest')
 data={}
 for i in range(1,10):
     url=f"https://api.github.com/search/repositories?q=created:>2022-05-01+created:<2022-05-10+archived:false&per_page=100&page={i}"
-    repositories=requests.get(url,headers=token).json()
+    repositories=requests.get(url,headers=headers).json()
     for i in range(100):
         repo_name=repositories['items'][i]['full_name']
         language=repositories['items'][i]['language']

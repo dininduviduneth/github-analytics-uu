@@ -4,6 +4,7 @@ import requests
 from pprint import pprint
 import pymongo
 token="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"
+headers = {'Authorization': 'token ' + token}
 myclient = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
 mydb = myclient["mydatabase_test"]
 mycol = mydb["repositories_test"]
@@ -17,7 +18,7 @@ while True:
     repo_name=msg1.data().decode('utf-8')
     #check if there exists runs if it return an empy json it means we dont have a github workflow which means no CICD
     #spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs").json() #without token 
-    spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs",headers=token).json()
+    spec_repo=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs",headers=headers).json()
     if spec_repo['total_count'] > 0:
         print(f"uses continuous integration.")
         ci_cd= True
