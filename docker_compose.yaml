@@ -13,14 +13,15 @@ services:
     networks:
       - pulsar_network
 
-  consumer:
-    build:
-      context: consumer/
-      dockerfile: Dockerfile
-    networks:
-      - pulsar_network
-    depends_on:
-      - pulsar_test
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
 
 networks:
   - pulsar_network
