@@ -24,6 +24,8 @@ for i in range(1,10):
             language=repositories['items'][i]['language']
         except:
             continue
+        if language==None:
+            continue
         mydict = {
         "full_name": repo_name,
         "language": language,
