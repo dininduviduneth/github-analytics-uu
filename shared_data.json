@@ -1,8 +1,26 @@
 {
+    "producer": {
+        "PRIVATE_IP": "192.168.2.51",
+        "tokens": [
+            "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",
+            "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"
+        ]
+    },
     "consumer_cicd": {
+        "PRIVATE_IP": "192.168.2.29",
         "tokens": [
             "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",
-            "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"
+            "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",
+            "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"
         ]
+    },
+    "pulsar": {
+        "port": 6650,
+        "topic": "repositories_tv1"
+    },
+    "mongodb": {
+        "port": 27017,
+        "database": "githubdata",
+        "collection": "repositories_v1"
     }
 }

@@ -45,8 +45,8 @@ while True:
     if 'total_count' in spec_repo:
         ci_cd = has_cicd(spec_repo)
     else:
-        print(spec_repo['message'] + " - Token: " + shared_data["consumer_cicd"]['tokens'][token_counter])
         if spec_repo['message'] == 'Bad credentials':
+            print(spec_repo['message'] + " - Token: " + shared_data["consumer_cicd"]['tokens'][token_counter])
             token_counter+=1
             if token_counter < token_count:
                 headers = {'Authorization': 'token ' + shared_data["consumer_cicd"]['tokens'][token_counter]}
