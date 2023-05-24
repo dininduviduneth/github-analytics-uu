@@ -6,13 +6,13 @@ import pymongo
 token="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" 
 headers = {'Authorization': 'token ' + token}
 myclient = pymongo.MongoClient("mongodb://root:example@192.168.2.51:27017/")
-mydb = myclient["mydatabase_test"]
-mycol = mydb["repositories_test"]
+mydb = myclient["githubdata"]
+mycol = mydb["repositories_v1"]
 # Create a pulsar client by supplying ip address and port
 client = pulsar.Client('pulsar://192.168.2.51:6650')
 data={}
 # Subscribe to a topic and subscription
-consumer1 = client.subscribe('repositories_testtest3', subscription_name='question2')
+consumer1 = client.subscribe('repositories_tv1', subscription_name='question2')
 while True:
     msg1= consumer1.receive()
     repo_name=msg1.data().decode('utf-8')

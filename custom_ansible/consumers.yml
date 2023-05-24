@@ -22,3 +22,7 @@
       copy:
         src: /home/ubuntu/Github-analytic-system-using-pulsar/consumers/{{consumer_file}}
         dest: /home/ubuntu/
+    - name: Copy shared_data.json
+      copy:
+        src: /home/ubuntu/Github-analytic-system-using-pulsar/shared_data.json
+        dest: /home/ubuntu/

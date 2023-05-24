@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   pulsar_test:
+    container_name: pulsar_standalone
     image: apachepulsar/pulsar:2.7.0
     command: bin/pulsar standalone
     ports:
@@ -14,6 +15,7 @@ services:
       - pulsar_network
 
   mongo:
+    container_name: mongodb
     image: mongo
     restart: always
     ports:

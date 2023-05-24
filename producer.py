@@ -8,15 +8,15 @@ token="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"
 headers = {'Authorization': 'token ' + token}
 #Creating the database
 myclient = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
-mydb = myclient["mydatabase_test"]
-mycol = mydb["repositories_test"]
+mydb = myclient["githubdata"]
+mycol = mydb["repositories_v1"]
 # Create a pulsar client by supplying ip address and port
 client = pulsar.Client('pulsar://localhost:6650')
 # Create a producer on the topic that consumer can subscribe to
-producer_1 = client.create_producer('repositories_testtest3')
+producer_1 = client.create_producer('repositories_tv1')
 data={}
 for i in range(1,10):
-    url=f"https://api.github.com/search/repositories?q=created:>2022-05-01+created:<2022-05-10+archived:false&per_page=100&page={i}"
+    url=f"https://api.github.com/search/repositories?q=pushed:>2022-05-01+pushed:<2022-05-10+archived:false&per_page=100&page={i}"
     repositories=requests.get(url,headers=headers).json()
     for i in range(100):
         try:
@@ -40,12 +40,3 @@ for i in range(1,10):
 
 # Destroy pulsar
 client.close()
-
-
-
-
-
-
-example_id = 5
-
-
