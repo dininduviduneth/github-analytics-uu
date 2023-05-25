@@ -23,7 +23,7 @@ collection = db[shared_data["mongodb"]["collection"]]
 client = pulsar.Client('pulsar://192.168.2.51:6650')
 
 # Subscribe to a topic and subscription
-consumer1 = client.subscribe(shared_data["pulsar"]["topic"], subscription_name=shared_data["pulsar"]["subscription_name"])
+consumer1 = client.subscribe(shared_data["pulsar"]["topic"], subscription_name=shared_data["consumer_commits"]["subscription_name"])
 
 while True:
     msg1= consumer1.receive()

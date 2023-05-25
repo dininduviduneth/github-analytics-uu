@@ -9,8 +9,6 @@ with open('shared_data.json', 'r') as json_file:
     # Load the JSON data
     shared_data = json.load(json_file)
 
-# shared_data["consumer_cicd"]['tokens'][0]
-
 token_count = len(shared_data["consumer_cicd"]['tokens'])
 token_counter = 0
 
@@ -25,7 +23,7 @@ collection = db[shared_data["mongodb"]["collection"]]
 client = pulsar.Client('pulsar://192.168.2.51:6650')
 
 # Subscribe to a topic and subscription
-consumer1 = client.subscribe(shared_data["pulsar"]["topic"], subscription_name=shared_data["pulsar"]["subscription_name"])
+consumer1 = client.subscribe(shared_data["pulsar"]["topic"], subscription_name=shared_data["consumer_cicd"]["subscription_name"])
 
 def has_cicd(spec_repo):
     if spec_repo['total_count'] > 0:
@@ -72,5 +70,15 @@ while True:
 
         print("Matched:", result.matched_count)
         print("Modified:", result.modified_count)
+    else:
+        filter = {
+            "full_name": repo_name
+        }
+
+        update = {
+            "$set": {
+                "updated_cicd": True
+            }
+        }
         
 client.close()
