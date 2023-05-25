@@ -66,10 +66,8 @@ while True:
             }
         }
 
-        result = collection.update_one(filter, update)
-
-        print("Matched:", result.matched_count)
-        print("Modified:", result.modified_count)
+        db_response = collection.update_one(filter, update)
+        print("Matched:" + str(db_response.matched_count) + ", Modified:" + str(db_response.modified_count) + " - " + repo_name)
     else:
         filter = {
             "full_name": repo_name

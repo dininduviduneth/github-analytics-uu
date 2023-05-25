@@ -43,27 +43,23 @@ while True:
                 print("Last updated repository: " + repo_name)
                 break
 
-    try:
-        commits = commits.headers
-        num_commits=int(commits['Link'].split('&page=')[-1].split(';')[0].split('>')[0])
 
-        filter = {
-            "full_name": repo_name
+    commits = commits.headers
+    num_commits=int(commits['Link'].split('&page=')[-1].split(';')[0].split('>')[0])
+
+    filter = {
+        "full_name": repo_name
+    }
+
+    update = {
+        "$set": {
+            "commits": num_commits,
+            "updated_commits": True
         }
+    }
 
-        update = {
-            "$set": {
-                "commits": num_commits,
-                "updated_commits": True
-            }
-        }
+    db_response = collection.update_one(filter, update)
 
-        db_response = collection.update_one(filter, update)
-
-        print("Matched:", db_response.matched_count + ", Modified:" + db_response.modified_count + " - " + repo_name)
-
-    except:
-        print("Cannot fetch the commits count for this repository:" + repo_name)
-        continue
+    print("Matched:", str(db_response.matched_count) + ", Modified:" + str(db_response.modified_count) + " - " + repo_name)
 
 client.close()

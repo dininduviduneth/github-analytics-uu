@@ -67,7 +67,7 @@ for day in range(50):
                     else:
                         db_response = collection.insert_one(filtered_item)
                         if db_response.acknowledged:
-                            print("Repository " + filtered_item["full_name"] + "inserted successfully!")
+                            print("Repository " + filtered_item["full_name"] + " inserted successfully!")
                             producer_1.send(filtered_item["full_name"].encode('utf-8'))
                         else:
                             print("Insertion failed for " + filtered_item["full_name"])

@@ -52,35 +52,31 @@ while True:
                     print("Last updated repository: " + repo_name)
                     break
 
-    try:
-        if has_tests(spec_repo_contents):
-            filter = {
-                "full_name": repo_name
-            }
+    if has_tests(spec_repo_contents):
+        filter = {
+            "full_name": repo_name
+        }
 
-            update = {
-                "$set": {
-                    "has_unit_tests": True,
-                    "updated_unit_tests": True
-                }
+        update = {
+            "$set": {
+                "has_unit_tests": True,
+                "updated_unit_tests": True
             }
+        }
 
-            db_response = collection.update_one(filter, update)
+        db_response = collection.update_one(filter, update)
+        print("Matched:" + str(db_response.matched_count) + ", Modified:" + str(db_response.modified_count) + " - " + repo_name)
+    else:
+        filter = {
+            "full_name": repo_name
+        }
 
-            print("Matched:", db_response.matched_count)
-            print("Modified:", db_response.modified_count)
-        else:
-            filter = {
-                "full_name": repo_name
+        update = {
+            "$set": {
+                "updated_unit_tests": True
             }
-
-            update = {
-                "$set": {
-                    "updated_unit_tests": True
-                }
-            }
-    except:
-        print("Repository doesn't have an items object!")
-        continue
+        }
+        db_response = collection.update_one(filter, update)
+        print("Matched:" + str(db_response.matched_count) + ", Modified:" + str(db_response.modified_count) + " - " + repo_name)
 
 client.close()
