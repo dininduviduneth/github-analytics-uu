@@ -6,13 +6,32 @@
             "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"
         ]
     },
+    "consumer_commits": {
+        "PRIVATE_IP": "192.168.2.165",
+        "tokens": [
+            "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",
+            "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",
+            "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"
+        ],
+        "subscription_name": "question2"
+    },
+    "consumer_test": {
+        "PRIVATE_IP": "192.168.2.238",
+        "tokens": [
+            "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",
+            "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",
+            "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"
+        ],
+        "subscription_name": "question3"
+    },
     "consumer_cicd": {
         "PRIVATE_IP": "192.168.2.29",
         "tokens": [
             "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",
             "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",
             "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"
-        ]
+        ],
+        "subscription_name": "question4"
     },
     "pulsar": {
         "port": 6650,

@@ -17,16 +17,15 @@ token_counter = 0
 # Select the first token in the list
 headers = {'Authorization': 'token ' + shared_data["consumer_cicd"]['tokens'][token_counter]}
 
-myclient = pymongo.MongoClient("mongodb://root:example@192.168.2.51:27017/")
-mydb = myclient["githubdata"]
-mycol = mydb["repositories_v1"]
+mongoclient = pymongo.MongoClient("mongodb://root:example@192.168.2.51:27017/")
+db = mongoclient[shared_data["mongodb"]["database"]]
+collection = db[shared_data["mongodb"]["collection"]]
 
 # Create a pulsar client by supplying ip address and port
 client = pulsar.Client('pulsar://192.168.2.51:6650')
-data={}
 
 # Subscribe to a topic and subscription
-consumer1 = client.subscribe('repositories_tv1', subscription_name='question4')
+consumer1 = client.subscribe(shared_data["pulsar"]["topic"], subscription_name=shared_data["pulsar"]["subscription_name"])
 
 def has_cicd(spec_repo):
     if spec_repo['total_count'] > 0:
@@ -64,11 +63,12 @@ while True:
 
         update = {
             "$set": {
-                "has_cicd": True
+                "has_cicd": True,
+                "updated_cicd": True
             }
         }
 
-        result = mycol.update_one(filter, update)
+        result = collection.update_one(filter, update)
 
         print("Matched:", result.matched_count)
         print("Modified:", result.modified_count)

@@ -35,8 +35,6 @@ total_days = (end_date - start_date).days + 1
 # Generate the array of dates
 date_array = [start_date + timedelta(days=i) for i in range(total_days)]
 
-data={}
-
 for day in range(50):
     for i in range(1):
         url=f"https://api.github.com/search/repositories?q=created:{date_array[day]}+archived:false&per_page=100&page={i+1}"
@@ -61,7 +59,7 @@ for day in range(50):
                     filtered_item["has_cicd"] = False
                     filtered_item["updated_commits"] = False
                     filtered_item["updated_unit_tests"] = False
-                    filtered_item["updated__cicd"] = False
+                    filtered_item["updated_cicd"] = False
 
                     if collection.find_one({"full_name": filtered_item["full_name"]}):
                         print("Repository already exists in the DB, moving to next")
