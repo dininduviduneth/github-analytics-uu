@@ -41,16 +41,16 @@ while True:
     spec_repo_contents=requests.get(f"https://api.github.com/repos/{repo_name}/contents",headers=headers).json()
 
     if 'message' in spec_repo_contents:
-            if spec_repo_contents['message'] == 'Bad credentials':
-                print(spec_repo_contents['message'] + " - Token: " + shared_data["consumer_test"]['tokens'][token_counter])
-                token_counter+=1
-                if token_counter < token_count:
-                    headers = {'Authorization': 'token ' + shared_data["consumer_test"]['tokens'][token_counter]}
-                    spec_repo_contents=requests.get(f"https://api.github.com/repos/{repo_name}/contents",headers=headers).json()
-                else:
-                    print("We have run out of tokens!")
-                    print("Last updated repository: " + repo_name)
-                    break
+        if spec_repo_contents['message'] == 'Bad credentials':
+            print(spec_repo_contents['message'] + " - Token: " + shared_data["consumer_test"]['tokens'][token_counter])
+            token_counter+=1
+            if token_counter < token_count:
+                headers = {'Authorization': 'token ' + shared_data["consumer_test"]['tokens'][token_counter]}
+                spec_repo_contents=requests.get(f"https://api.github.com/repos/{repo_name}/contents",headers=headers).json()
+            else:
+                print("We have run out of tokens!")
+                print("Last updated repository: " + repo_name)
+                break
 
     if has_tests(spec_repo_contents):
         filter = {

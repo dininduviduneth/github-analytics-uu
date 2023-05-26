@@ -26,3 +26,7 @@
       copy:
         src: /home/ubuntu/Github-analytic-system-using-pulsar/shared_data.json
         dest: /home/ubuntu/
+    - name: Copy helpers.py
+      copy:
+        src: /home/ubuntu/Github-analytic-system-using-pulsar/helpers.py
+        dest: /home/ubuntu/
