@@ -35,8 +35,16 @@ producer_1 = client.create_producer(shared_data["pulsar"]["topic"])
 # dates_array = [start_date + timedelta(days=i) for i in range(total_days)]
 dates_array = generate_dates_array(date(2022, 1, 1), date(2022, 12, 31))
 hours = shared_data["hours"]
+output_file = "last_day_observed.txt"
+with open(output_file, 'r') as file:
+    last_day_observed = file.read()
+    file.close()
 
-for day in range(50):
+
+for day in range(last_day_observed, 50):
+    with open(output_file, 'w') as file:
+        file.write(str(day))
+        file.close()
     for hour in hours:
         if token_counter == token_count - 1:
             token_counter = 0

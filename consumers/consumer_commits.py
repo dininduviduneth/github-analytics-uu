@@ -3,6 +3,7 @@ import json
 import requests
 from pprint import pprint
 import pymongo
+import time
 
 # Load the shared_data.json file
 with open('shared_data.json', 'r') as json_file:
@@ -11,6 +12,7 @@ with open('shared_data.json', 'r') as json_file:
 
 token_count = len(shared_data["consumer_commits"]['tokens'])
 token_counter = 0
+
 
 # Select the first token in the list
 headers = {'Authorization': 'token ' + shared_data["consumer_commits"]['tokens'][token_counter]}
@@ -29,22 +31,42 @@ while True:
     msg1= consumer1.receive()
     repo_name=msg1.data().decode('utf-8')
     # commits=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1") # without token 
-    commits=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=headers)
-    
-    if 'message' in commits:
-        if commits['message'] == 'Bad credentials':
-            print(commits['message'] + " - Token: " + shared_data["consumer_commits"]['tokens'][token_counter])
+    r=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=headers)
+    info = r.json()
+    if 'message' in info:
+        if 'API' in info['message']:
+            print(info['message'] + " - Token: " + shared_data["consumer_commits"]['tokens'][token_counter])
             token_counter+=1
             if token_counter < token_count:
+                print("Moving to next token")
                 headers = {'Authorization': 'token ' + shared_data["consumer_commits"]['tokens'][token_counter]}
-                commits=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=headers).json()
+                r=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=headers)
             else:
                 print("We have run out of tokens!")
                 print("Last updated repository: " + repo_name)
-                break
+                headers = {'Authorization': 'token ' + shared_data["consumer_commits"]['tokens'][0]}
+                r = requests.get('https://api.github.com/rate_limit', headers=headers)
+                if r.status_code == 200:
+                    info = r.json()
+                    reset = info['resources']['core']['reset']
+                    seconds_left = reset - time.time()
+                    if seconds_left > 0:
+                        print(f"Sleeping for {seconds_left} seconds")
+                        time.sleep(seconds_left)
+                    token_counter = 0
+                    print("starting again")
+                    r=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=headers)
+
+                else:
+                    print("Couldn't query API")
+                    break
+        else:
+            print(info['message'] + " - Token: " + shared_data["consumer_commits"]['tokens'][token_counter])
+            break
 
 
-    commits = commits.headers
+           
+    commits = r.headers                
     num_commits=int(commits['Link'].split('&page=')[-1].split(';')[0].split('>')[0])
 
     filter = {
