@@ -37,7 +37,7 @@ dates_array = generate_dates_array(date(2022, 1, 1), date(2022, 12, 31))
 hours = shared_data["hours"]
 output_file = "last_day_observed.txt"
 with open(output_file, 'r') as file:
-    last_day_observed = file.read()
+    last_day_observed = int(file.read())
     file.close()
 
 

@@ -5,6 +5,7 @@ from pprint import pprint
 import pymongo
 import time
 
+from helpers import index_nearest_reset, out_of_tokens_handler
 # Load the shared_data.json file
 with open('shared_data.json', 'r') as json_file:
     # Load the JSON data
@@ -12,10 +13,9 @@ with open('shared_data.json', 'r') as json_file:
 
 token_count = len(shared_data["consumer_commits"]['tokens'])
 token_counter = 0
+tokens = shared_data["consumer_commits"]['tokens']
 
 
-# Select the first token in the list
-headers = {'Authorization': 'token ' + shared_data["consumer_commits"]['tokens'][token_counter]}
 
 mongoclient = pymongo.MongoClient("mongodb://root:example@192.168.2.51:27017/")
 db = mongoclient[shared_data["mongodb"]["database"]]
@@ -30,7 +30,8 @@ consumer1 = client.subscribe(shared_data["pulsar"]["topic"], subscription_name=s
 while True:
     msg1= consumer1.receive()
     repo_name=msg1.data().decode('utf-8')
-    # commits=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1") # without token 
+    # commits=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1") # without token
+    headers = {'Authorization': 'token ' + tokens[token_counter]}
     r=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=headers)
     info = r.json()
     if 'message' in info:
@@ -39,24 +40,14 @@ while True:
             token_counter+=1
             if token_counter < token_count:
                 print("Moving to next token")
-                headers = {'Authorization': 'token ' + shared_data["consumer_commits"]['tokens'][token_counter]}
-                r=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=headers)
+                continue
             else:
                 print("We have run out of tokens!")
                 print("Last updated repository: " + repo_name)
-                headers = {'Authorization': 'token ' + shared_data["consumer_commits"]['tokens'][0]}
-                r = requests.get('https://api.github.com/rate_limit', headers=headers)
-                if r.status_code == 200:
-                    info = r.json()
-                    reset = info['resources']['core']['reset']
-                    seconds_left = reset - time.time()
-                    if seconds_left > 0:
-                        print(f"Sleeping for {seconds_left} seconds")
-                        time.sleep(seconds_left)
-                    token_counter = 0
-                    print("starting again")
+                token_counter = index_nearest_reset(tokens)
+                if out_of_tokens_handler(token=tokens[token_counter]):
+                    headers = {'Authorization': 'token ' + tokens[token_counter]}
                     r=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=headers)
-
                 else:
                     print("Couldn't query API")
                     break
@@ -83,5 +74,6 @@ while True:
     db_response = collection.update_one(filter, update)
 
     print("Matched:", str(db_response.matched_count) + ", Modified:" + str(db_response.modified_count) + " - " + repo_name)
+    consumer1.acknowledge(msg1)
 
 client.close()
