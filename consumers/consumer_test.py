@@ -53,8 +53,7 @@ while True:
                 print("Last updated repository: " + repo_name)
                 token_counter = index_nearest_reset(tokens)
                 if out_of_tokens_handler(token=tokens[token_counter]):
-                    headers = {'Authorization': 'token ' + tokens[token_counter]}
-                    r=requests.get(f"https://api.github.com/repos/{repo_name}/contents",headers=headers)
+                    continue
                 else:
                     print("Couldn't query API")
                     break

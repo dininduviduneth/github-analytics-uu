@@ -42,7 +42,15 @@ def out_of_tokens_handler(token):
         seconds_left = reset - time.time()
         if seconds_left > 0:
             print(f"Sleeping for {seconds_left} seconds")
-            time.sleep(seconds_left)
+            time.sleep(seconds_left + 30)
         print("starting again")
         return True
     return False    
+
+def index_first_available_token(tokens):
+    for i in range(len(tokens)):
+        limits = get_limits(tokens[i])
+        print(limits["core_remaining"])
+        if limits["core_remaining"] > 0:
+            return i
+    return -1

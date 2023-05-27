@@ -5,7 +5,7 @@ from pprint import pprint
 import pymongo
 import time
 
-from helpers import index_nearest_reset, out_of_tokens_handler
+from helpers import index_nearest_reset, out_of_tokens_handler, index_first_available_token
 # Load the shared_data.json file
 with open('shared_data.json', 'r') as json_file:
     # Load the JSON data
@@ -37,17 +37,16 @@ while True:
     if 'message' in info:
         if 'API' in info['message']:
             print(info['message'] + " - Token: " + shared_data["consumer_commits"]['tokens'][token_counter])
-            token_counter+=1
-            if token_counter < token_count:
-                print("Moving to next token")
+            token_counter = index_first_available_token(tokens)
+            if token_counter != -1:
+                print("Moving to different token")
                 continue
             else:
                 print("We have run out of tokens!")
                 print("Last updated repository: " + repo_name)
                 token_counter = index_nearest_reset(tokens)
-                if out_of_tokens_handler(token=tokens[token_counter]):
-                    headers = {'Authorization': 'token ' + tokens[token_counter]}
-                    r=requests.get(f"https://api.github.com/repos/{repo_name}/commits?per_page=1&page=1",headers=headers)
+                if out_of_tokens_handler(token=tokens[token_counter]):                    
+                    continue
                 else:
                     print("Couldn't query API")
                     break

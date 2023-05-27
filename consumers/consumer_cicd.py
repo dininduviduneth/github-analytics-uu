@@ -51,8 +51,7 @@ while True:
                 print("Last updated repository: " + repo_name)
                 token_counter = index_nearest_reset(tokens)
                 if out_of_tokens_handler(token=tokens[token_counter]):
-                    headers = {'Authorization': 'token ' + tokens[token_counter]}
-                    r=requests.get(f"https://api.github.com/repos/{repo_name}/actions/runs",headers=headers)
+                    continue
                 else:
                     print("Couldn't query API")
                     break
@@ -72,8 +71,7 @@ while True:
             }
         }
 
-        db_response = collection.update_one(filter, update)
-        print("Matched:" + str(db_response.matched_count) + ", Modified:" + str(db_response.modified_count) + " - " + repo_name)
+
     else:
         filter = {
             "full_name": repo_name
@@ -84,5 +82,8 @@ while True:
                 "updated_cicd": True
             }
         }
+    db_response = collection.update_one(filter, update)
+    print("Matched:" + str(db_response.matched_count) + ", Modified:" + str(db_response.modified_count) + " - " + repo_name)
+        
     consumer1.acknowledge(msg1)
 client.close()

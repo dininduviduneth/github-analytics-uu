@@ -41,7 +41,7 @@ with open(output_file, 'r') as file:
     file.close()
 
 
-for day in range(last_day_observed, 50):
+for day in range(last_day_observed, 365):
     with open(output_file, 'w') as file:
         file.write(str(day))
         file.close()
@@ -52,7 +52,7 @@ for day in range(last_day_observed, 50):
             token_counter += 1
         
         headers = {'Authorization': 'token ' + shared_data["producer"]['tokens'][token_counter]}
-        for i in range(1):
+        for i in range(10):
             url=f"https://api.github.com/search/repositories?q=pushed:{dates_array[day]}T{hour}+archived:false&per_page=100&page={i+1}"
             repositories = requests.get(url,headers=headers).json()
             if 'message' in repositories:
