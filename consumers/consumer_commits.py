@@ -50,6 +50,10 @@ while True:
                 else:
                     print("Couldn't query API")
                     break
+        elif info['message'] == "Not Found":
+            print(f"Encountered deleted repository {repo_name}")
+            consumer1.acknowledge(msg1)
+            continue
         else:
             print(info['message'] + " - Token: " + shared_data["consumer_commits"]['tokens'][token_counter])
             break

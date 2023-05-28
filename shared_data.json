@@ -14,33 +14,21 @@
         "PRIVATE_IP": "192.168.2.165",
         "tokens": [
             "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",
-            "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",
-            "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",
-            "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",
-            "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",
-            "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"
+            "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"
         ],
         "subscription_name": "question2"
     },
     "consumer_test": {
         "PRIVATE_IP": "192.168.2.238",
         "tokens": [
-            "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",
-            "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",
             "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",
-            "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",
-            "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",
-            "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"
+            "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"
         ],
         "subscription_name": "question3"
     },
     "consumer_cicd": {
         "PRIVATE_IP": "192.168.2.29",
         "tokens": [
-            "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",
-            "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",
-            "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",
-            "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",
             "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",
             "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"
         ],
