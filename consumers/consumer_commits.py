@@ -15,7 +15,7 @@ token_count = len(shared_data["consumer_commits"]['tokens'])
 token_counter = 0
 tokens = shared_data["consumer_commits"]['tokens']
 
-
+server_error_sleep = 300
 
 mongoclient = pymongo.MongoClient("mongodb://root:example@192.168.2.51:27017/")
 db = mongoclient[shared_data["mongodb"]["database"]]
@@ -53,6 +53,10 @@ while True:
         elif info['message'] == "Not Found":
             print(f"Encountered deleted repository {repo_name}")
             consumer1.acknowledge(msg1)
+            continue
+        elif info['message'] == "Server Error":
+            print(f"Encountered server error, sleeping for {server_error_sleep} seconds")
+            time.sleep(server_error_sleep)
             continue
         else:
             print(info['message'] + " - Token: " + shared_data["consumer_commits"]['tokens'][token_counter])

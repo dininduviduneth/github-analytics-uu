@@ -3,6 +3,7 @@ import json
 import requests
 from pprint import pprint
 import pymongo
+import time
 from helpers import index_nearest_reset, out_of_tokens_handler
 
 # Load the shared_data.json file
@@ -13,6 +14,8 @@ with open('shared_data.json', 'r') as json_file:
 token_count = len(shared_data["consumer_test"]['tokens'])
 token_counter = 0
 tokens = shared_data["consumer_test"]['tokens']
+
+server_error_sleep = 300
 # Select the first token in the list
 headers = {'Authorization': 'token ' + shared_data["consumer_test"]['tokens'][token_counter]}
 
@@ -60,6 +63,10 @@ while True:
         elif info['message'] == "Not Found":
             print(f"Encountered deleted repository {repo_name}")
             consumer1.acknowledge(msg1)
+            continue
+        elif info['message'] == "Server Error":
+            print(f"Encountered server error, sleeping for  {server_error_sleep} seconds")
+            time.sleep(server_error_sleep)
             continue
         else:
             print(info['message'] + " - Token: " + tokens[token_counter])
