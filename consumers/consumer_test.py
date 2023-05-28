@@ -4,7 +4,7 @@ import requests
 from pprint import pprint
 import pymongo
 import time
-from helpers import index_nearest_reset, out_of_tokens_handler
+from helpers import index_nearest_reset, out_of_tokens_handler, index_first_available_token
 
 # Load the shared_data.json file
 with open('shared_data.json', 'r') as json_file:
@@ -47,9 +47,9 @@ while True:
     if 'message' in info:
         if 'API' in info['message']:
             print(info['message'] + " - Token: " + tokens[token_counter])
-            token_counter+=1
-            if token_counter < token_count:
-                print("Moving to next token")
+            token_counter = index_first_available_token(tokens)
+            if token_counter != -1:
+                print("Moving to different token")
                 continue
             else:
                 print("We have run out of tokens!")

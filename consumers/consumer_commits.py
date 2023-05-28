@@ -36,7 +36,7 @@ while True:
     info = r.json()
     if 'message' in info:
         if 'API' in info['message']:
-            print(info['message'] + " - Token: " + shared_data["consumer_commits"]['tokens'][token_counter])
+            print(info['message'] + " - Token: " + tokens[token_counter])
             token_counter = index_first_available_token(tokens)
             if token_counter != -1:
                 print("Moving to different token")
