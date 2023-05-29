@@ -47,19 +47,19 @@ cfg_file_path =  os.getcwd()+'/consumer1-cfg.txt'
 if os.path.isfile(cfg_file_path):
     userdata_consumer1= open(cfg_file_path)
 else:
-    sys.exit("prod-cloud-cfg.txt is not in current working directory")
+    sys.exit("consumer1-cfg.txt is not in current working directory")
 
 cfg_file_path =  os.getcwd()+'/consumer2-cfg.txt'
 if os.path.isfile(cfg_file_path):
     userdata_consumer2 = open(cfg_file_path)
 else:
-    sys.exit("dev-cloud-cfg.txt is not in current working directory")
+    sys.exit("consumer2-cfg.txt is not in current working directory")
 
 cfg_file_path =  os.getcwd()+'/consumer3-cfg.txt'
 if os.path.isfile(cfg_file_path):
     userdata_consumer3= open(cfg_file_path)
 else:
-    sys.exit("dev-cloud-cfg.txt is not in current working directory")    
+    sys.exit("consumer3-cfg.txt is not in current working directory")    
     
 
 secgroups = ['default']
@@ -84,7 +84,7 @@ while inst_status_prod == 'BUILD' or inst_status_dev == 'BUILD' or  inst_status_
     inst_status_prod = instance_prod.status
     instance_dev = nova.servers.get(instance_dev.id)
     inst_status_dev = instance_dev.status
-    instance_prod2 = nova.servers.get(instance_dev.id)
+    instance_prod2 = nova.servers.get(instance_prod2.id)
     inst_status_prod2 = instance_dev.status
 
 ip_address_prod = None
