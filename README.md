@@ -38,10 +38,10 @@ Copy the public key from the .ssh/ directory and paste it into the authorized ke
 
 Update the inventory file:
 
-    Copy the IP addresses of the consumer VMs.
-    Paste the IP addresses into the inventory file located in the custom_ansible/ folder.
+Copy the IP addresses of the consumer VMs.
+Paste the IP addresses into the inventory file located in the custom_ansible/ folder.
 
-Configure the consumers:
+Configure the consumer VMs:
 
 Navigate to the custom_ansible/ folder:
 
