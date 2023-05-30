@@ -1,31 +1,61 @@
 # Github-analytic-system-using-pulsar
 
-For the consumer and producer we need to create a shared network using the command:
+Access the main VM:
 
-    docker network create pulsar_network
-    
-first we start the pulsar container:
+    Connect to the main VM after creating the four VMs.
 
-    docker run -d -it -p 6650:6650 -p 8080:8080 \
-    --name pulsar_test --mount source=pulsardata,target=/pulsar/data \
-    --mount source=pulsarconf,target=/pulsar/conf apachepulsar/pulsar:2.7.0 bin/pulsar standalone 
+Pull the repository:
 
-Then we build the images of the consumer producer with :
+Run the following command:
 
-    docker build --tag {name}:{tag} producer/
-
-and run the consumer producer with :
-
-    docker run --network pulsar_network  {name}:{tag}
-
-Note that for the consumer/producer to connect to the pulsar client we need to give the name we have specified when we initialized the container
-the client should look something like this :
-
-    client = pulsar.Client('pulsar://pulsar_container:6650')
+    git pull https://github.com/Steven01310131/Github-analytic-system-using-pulsar.git
 
 
-
-the consumers and producers need to be changed to right adress of the pulsar before they can run 
-
+Install dependencies:
 
 
+Navigate to the repository directory:
+
+    cd Github-analytic-system-using-pulsar
+
+Make the main.sh file executable:
+
+    sudo chmod +x main.sh
+
+Run the main.sh file to install all dependencies:
+
+    ./main.sh
+
+Establish SSH connection:
+
+Create an SSH connection between the main VM and the three consumer VMs.
+On the main VM, execute the following command:
+
+    ssh-keygen -t rsa
+
+This will generate a public and private SSH key pair.
+Copy the public key from the .ssh/ directory and paste it into the authorized keys file in the .ssh/ directory of the other three VMs.
+
+Update the inventory file:
+
+    Copy the IP addresses of the consumer VMs.
+    Paste the IP addresses into the inventory file located in the custom_ansible/ folder.
+
+Configure the consumers:
+
+Navigate to the custom_ansible/ folder:
+
+Run the following command to execute the Ansible playbook and configure the consumers:
+
+    ansible-playbook consumer.yml
+
+This will install all necessary dependencies and copy the consumer Python code to each VM.
+
+Start the containers:
+
+In the Github-analytic-system-using-pulsar/ directory, execute the following command:
+
+    docker-compose up
+
+This will start the Pulsar and MongoDB containers.
+Once the containers are up and running, you can individually start the consumers and producers on each VM.
