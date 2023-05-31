@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+
+    <h2>Top 10 programming languages based on the number of projects developed</h2>
+    <canvas id="graph1"></canvas>
+    <h2>Top 10 most frequently updated GitHub projects </h2>
+    <canvas id="graph2"></canvas>
+    <h2>Top 10 programming languages that follow the test-driven development approach </h2>
+    <canvas id="graph3"></canvas>
+    <h2> Top 10 programming languages that follow test-driven development and DevOps approach</h2>
+    <canvas id="graph4"></canvas>
+    <script>
+        // Code to render the first graph using Chart.js
+        var ctx1 = document.getElementById('graph1').getContext('2d');
+        var chart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: {{ lang|tojson }},
+                datasets: [{
+                    label: 'Project Counts',
+                    data: {{ project_counts|tojson }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        // Code to render the second graph using Chart.js
+        var ctx2 = document.getElementById('graph2').getContext('2d');
+        var chart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: {{ p_name|tojson }},
+                datasets: [{
+                    label: 'Update Frequencies',
+                    data: {{ p_count|tojson }},
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        // Code to render the Third graph using Chart.js
+        var ctx3 = document.getElementById('graph3').getContext('2d');
+        var chart3 = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: {{ td_lang|tojson }},
+                datasets: [{
+                    label: 'Update Frequencies',
+                    data: {{ t_count|tojson }},
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        // Code to render the Fourth graph using Chart.js
+        var ctx4 = document.getElementById('graph4').getContext('2d');
+        var chart4 = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                labels: {{ de_lang|tojson }},
+                datasets: [{
+                    label: 'Update Frequencies',
+                    data: {{ d_count|tojson }},
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
