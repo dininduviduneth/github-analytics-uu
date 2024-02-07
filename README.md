@@ -1,4 +1,13 @@
-# Github-analytic-system-using-pulsar
+# GitHub Analytics Using Apache Pulsar - Streaming Analytics Solution
+
+In this project we have used GitHub APIs to simulate streams of real-time data to be processed paralelly using the power of Apache Pulsar (a popular stream processing framework). The main objective of the project was to get our hands dirty with setting up a multi-node network of components required for the task through automation via Ansible and Docker, load data into MongoDB and present analytics via a Flask App. This was done as a part of a grading requirement for a Data Engineering course.
+
+The collaborators of this project are:
+
+* [Dinindu Seneviratne](https://github.com/dininduviduneth)
+* [Max Malmros](https://github.com/Maxlytrius)
+* [Sarath Suresh](https://github.com/SarathPeringayiSuresh)
+* [Stefanos Tsampanakis](https://github.com/Steven01310131)
 
 Access the main VM:
 
